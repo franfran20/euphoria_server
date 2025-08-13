@@ -1,5 +1,6 @@
 import {
   SimulateContractParameters,
+  WalletClient,
   createPublicClient,
   createWalletClient,
   http,
@@ -11,7 +12,7 @@ import { EUPHORIA_FACTORY_ABI, EUPHORIA_FACTORY_ADDRESS } from "./constants";
 
 const relayerAccount = privateKeyToAccount(config.relayerKey);
 
-const relayerClient = createWalletClient({
+const relayerClient: WalletClient = createWalletClient({
   chain: morphHolesky,
   transport: http(),
   account: relayerAccount,
@@ -35,6 +36,7 @@ const executeContractFunction = async ({
     functionName,
     args,
   });
+  // @ts-ignore
   const hash = await relayerClient.writeContract(request);
   await publicClient.waitForTransactionReceipt({ hash });
 
