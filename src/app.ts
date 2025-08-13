@@ -14,14 +14,15 @@ import { errorHandler } from "./middleware/errorHandler";
 import { connectToDB } from "./db";
 
 const app: Express = express();
-const clientOrigin = "https://euphoria-client-lilac.vercel.app/";
 
-app.use(
-  cors({
-    origin: clientOrigin,
-    credentials: true,
-  })
-);
+// const clientOrigin = "https://euphoria-client-lilac.vercel.app/";
+
+// app.use(
+//   cors({
+//     origin: clientOrigin,
+//     credentials: true,
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());
