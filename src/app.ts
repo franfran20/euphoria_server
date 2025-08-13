@@ -14,7 +14,7 @@ import { errorHandler } from "./middleware/errorHandler";
 import { connectToDB } from "./db";
 
 const app: Express = express();
-const clientOrigin = "http://localhost:3000";
+const clientOrigin = "https://euphoria-client-lilac.vercel.app/";
 
 app.use(
   cors({
