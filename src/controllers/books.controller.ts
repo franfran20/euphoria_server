@@ -103,14 +103,22 @@ export const releaseChapter = async (req: Request, res: Response) => {
   if (sig.user != req.user)
     throw new ForbiddenError("Signature does not match authenticated user.");
 
-  const chapterId: bigint = await executeContractFunction({
+  await executeContractFunction({
     functionName: "releaseChapterWithSig",
     args: [bookId, title, gatedURI, finale, sig],
   });
 
+  const [bookInfo, bookName, bookWriter, bookCoverImage] =
+    (await publicClient.readContract({
+      address: EUPHORIA_FACTORY_ADDRESS,
+      abi: EUPHORIA_FACTORY_ABI,
+      functionName: "getBook",
+      args: [bookId],
+    })) as BookReturnType;
+
   const chapter = await Chapter.create({
     bookId: bookId,
-    chapterId: chapterId.toString(),
+    chapterId: bookInfo.chaptersWritten.toString(),
     content,
   });
 
